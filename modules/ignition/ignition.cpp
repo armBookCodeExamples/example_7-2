@@ -3,8 +3,8 @@
 #include "mbed.h"  
 
 // DigitalIn objects for input pins
-DigitalIn driverSeat(D2);
-DigitalIn ignitionSwitch(D5);
+DigitalIn driverSeat(D11);
+DigitalIn ignitionSwitch(D12);
 
 // DigitalOut objects for output pins
 DigitalOut engineOnLED(LED2);
@@ -29,7 +29,7 @@ void ignitionStateUpdate() {
     bool ignitionSwitchReleasedEvent = ignitionSwitchUpdate();
 
     // Start the engine if the driver's seat is occupied and the ignition button is released
-    if (driverSeat && ignitionSwitchReleasedEvent && !engineRunning) {
+    if (driverSeat && ignitionSwitch && !engineRunning) {
         engineOnLED = true;
         engineRunning = true;
     }
@@ -40,7 +40,7 @@ void ignitionStateUpdate() {
     }
 
     // Stop the engine when the ignition button is released
-    if (engineRunning && ignitionSwitchReleasedEvent) {
+    if (engineRunning && ignitionSwitch) {
         engineOnLED = false;
         engineRunning = false;
     }
